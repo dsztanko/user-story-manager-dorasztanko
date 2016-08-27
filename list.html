@@ -1,0 +1,46 @@
+<!--List page-->
+<!--localhost:port/ and /list-->
+<!--Table containing all the data that the Product Backlog tab has in your sprint spreadsheet-->
+<!--so called "list of User Stories"-->
+<!--GET-->
+<!--DELETE-->
+
+<!--
+It should have a table containing all the data that the Product Backlog tab has in your sprint spreadsheet.
+In the end of every row, you should add a pen and a bin icon. Both should be links, the pen should redirect
+to the editing page of the given row and the bin icon should perform a DELETE on the given row.
+Add an "Add a new User Story" button to the page. It should redirect to the /add page.
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sprint reporter</title>
+</head>
+<body>
+
+<p><h2>User Story Manager</h2></p>
+
+<p><button>Add new User Story</button></p>
+
+<table style="border:1px solid black;" width="90%">
+    <tr>
+        <th width="5%" align="left" style="border:1px solid black;">ID</th>
+        <th width="15%" align="left" style="border:1px solid black;">Story Title</th>
+        <th width="25%" align="left" style="border:1px solid black;">User Story</th>
+        <th width="25%" align="left" style="border:1px solid black;">Acceptance Criteria</th>
+        <th width="10%" align="left" style="border:1px solid black;">Business Value</th>
+        <th width="10%" align="left" style="border:1px solid black;">Estimation</th>
+        <th width="10%" align="left" style="border:1px solid black;" colspan="2">Status</th>
+                <!--PUT-->
+        <th width="10%" align="left" style="border:1px solid black;" colspan="2"><button>PEN</button></th>
+                <!--DELETE-->
+        <th width="10%" align="left" style="border:1px solid black;" colspan="2"><button>BIN</button></th>
+
+    </tr>
+
+</table>
+
+</body>
+</html>
