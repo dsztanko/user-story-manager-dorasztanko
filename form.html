@@ -1,3 +1,16 @@
+<!--Adding page-->
+<!--Title: User Story Manager  - Add new Story-->
+<!--localhost:port/story-->
+<!--Adding newly generated User Stories-->
+<!--No default values.-->
+<!--POST-->
+
+<!--Editor page-->
+<!--Title: User Story Manager  - Edit Story-->
+<!--localhost:port/story/<story_id>-->
+<!--Allows to edit previously created User Stories-->
+<!--PUT-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,33 +21,33 @@
 <body>
 <form action="..." method="post">
 
-<p><h2>User Story Manager - Add new Story</h2></p>
+<h2>User Story Manager - Add new Story</h2>
 
 <p>Story Title</p>
-<p><textarea rows="1" cols="60"></textarea></p>
+<p><textarea id="story_title" rows="1" cols="60"></textarea></p>
 
 <p>User Story</p>
-<p><textarea rows="5" cols="60"></textarea></p>
+<p><textarea id="story_content" rows="5" cols="60"></textarea></p>
 
 <p>Acceptance Criteria</p>
-<p><textarea rows="7" cols="60"></textarea></p>
+<p><textarea id="acceptance_criteria" rows="7" cols="60"></textarea></p>
 
 <p>Business Value</p>
-<p><input type="number" name="business_value" step="100" min="100" max="1500"></p>
+<p><input type="number" id="business_value" step="100" min="100" max="1500"></p>
 
 <p>Estimation (h)</p>
-<p><input type="number" name="estimation" step="0.5" min="0.5" max="400"></p>
+<p><input type="number" id="estimation" step="0.5" min="0.5" max="40"></p>
 
 
 <p>Status</p>
-<p><select name="status">
+<p><select id="status">
     <option>Planning</option>
     <option>To Do</option>
     <option>In Progress</option>
     <option>Review</option>
     <option>Done</option></select></p>
 
-<p><button type="submit">Save</button></p>
+<p><button id="save" type="submit">Save</button></p>
 </form>
 
 </body>
