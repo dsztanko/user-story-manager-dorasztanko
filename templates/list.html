@@ -20,9 +20,9 @@ Add an "Add a new User Story" button to the page. It should redirect to the /add
 </head>
 <body>
 
-<p><h2>User Story Manager</h2></p>
+<h2>User Story Manager</h2>
 
-<p><button>Add new User Story</button></p>
+<form action="/story" method="get"><p><button>Add a new User Story</button></p></form>
 
 <table style="border:1px solid black;" width="90%">
     <tr>
@@ -32,14 +32,24 @@ Add an "Add a new User Story" button to the page. It should redirect to the /add
         <th width="25%" align="left" style="border:1px solid black;">Acceptance Criteria</th>
         <th width="10%" align="left" style="border:1px solid black;">Business Value</th>
         <th width="10%" align="left" style="border:1px solid black;">Estimation</th>
-        <th width="10%" align="left" style="border:1px solid black;" colspan="2">Status</th>
+        <th width="10%" align="left" style="border:1px solid black;">Status</th>
+            {% for row in query %}
+            <tr>
+                <td align="left" style="border:1px solid black;">{{row[0]}}</td>
+                <td align="left" style="border:1px solid black;">{{row[1]}}</td>
+                <td align="left" style="border:1px solid black;">{{row[2]}}</td>
+                <td align="left" style="border:1px solid black;">{{row[3]}}</td>
+                <td align="left" style="border:1px solid black;">{{row[4]}}</td>
+                <td align="left" style="border:1px solid black;">{{row[5]}}</td>
+                <td align="left" style="border:1px solid black;">{{row[6]}}</td>
                 <!--PUT-->
-        <th width="10%" align="left" style="border:1px solid black;">
-            <input type="image" id="edit" src="../static/pen.png" width="20" align="center" alt="Edit"></th>
+                <td width="10%" align="left" style="border:1px solid black;">
+                    <input type="image" id="edit" src="../static/pen.png" width="20" align="center" alt="Edit"></td>
                 <!--DELETE-->
-        <th width="10%" align="left" style="border:1px solid black;" >
-            <input type="image" id="edit" src="../static/bin.png" width="20" align="center" alt="Delete"></th>
-
+                <td width="10%" align="left" style="border:1px solid black;" >
+                    <input type="image" id="delete" src="../static/bin.png" width="20" align="center" alt="Delete"></td>
+            </tr>
+            {% endfor %}
     </tr>
 
 </table>
