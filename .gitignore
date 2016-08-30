@@ -87,3 +87,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# ignoring pycharm personal configure settings
+.idea
+
+# ignoring created database
+database.db
