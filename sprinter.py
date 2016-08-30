@@ -42,6 +42,7 @@ def setup_db():
     """)
 
 
+# Closing database connection
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -49,55 +50,50 @@ def close_connection(exception):
         db.close()
 
 
-@app.route("/" or "/list", methods=['GET', 'POST'])
+# List page
+@app.route("/", methods=['GET'])
 def index():
-    if request.method == 'GET':
-        testing_query = query_db("SELECT * FROM sprinter ORDER BY id ASC")
-        return render_template('list.html', query=testing_query)
-    else:
-        pass
+    testing_query = query_db("SELECT * FROM sprinter ORDER BY id ASC")
+    return render_template('list.html', query=testing_query)
 
 
+# Deleting selected user story - not working
+@app.route("/list", methods=['POST'])
 def deleting_user_story(story_id):
-    if request.method == ['POST']:
-        query_db("DELETE * FROM sprinter WHERE id = " + str(story_id) + " ORDER BY id ASC")
-        return redirect('/list')
-    else:
-        pass
+    query_db("""DELETE FROM sprinter WHERE id=?""" + str(story_id))
+    return redirect('/')
 
 
-@app.route('/story', methods=['GET', 'POST'])
+# Story page with blank input boxes
+@app.route('/story', methods=['GET'])
 def template_test():
-    if request.method == 'GET':
-        return render_template('form.html')
-    else:
-        pass
+    return render_template('form.html')
 
 
+# Story page with adding new user stories
+@app.route('/story', methods=['POST'])
 def adding_user_story():
-    if request.method == 'POST':
-        data = {}
-        data["story_title"] = request.form['story_title']
-        data["story_content"] = request.form['story_content']
-        data["acceptance_criteria"] = request.form['acceptance_criteria']
-        data["business_value"] = request.form['business_value']
-        data["estimation"] = request.form['estimation']
-        data["status"] = request.form['status']
+    data = {}
+    data["story_title"] = request.form['story_title']
+    data["story_content"] = request.form['story_content']
+    data["acceptance_criteria"] = request.form['acceptance_criteria']
+    data["business_value"] = request.form['business_value']
+    data["estimation"] = request.form['estimation']
+    data["status"] = request.form['status']
 
-        query = """
-                INSERT INTO sprinter (title, content, acceptance_criteria, business_value, estimation, status)
-                VALUES ("{story_title}",
-                        "{story_content}",
-                        "{acceptance_criteria}",
-                        "{business_value}",
-                        "{estimation}",
-                        "{status}")""".format(**data)
-        query_db(query)
-        return redirect('/')
-    else:
-        pass
+    query = """
+            INSERT INTO sprinter (title, content, acceptance_criteria, business_value, estimation, status)
+            VALUES ("{story_title}",
+                    "{story_content}",
+                    "{acceptance_criteria}",
+                    "{business_value}",
+                    "{estimation}",
+                    "{status}")""".format(**data)
+    query_db(query)
+    return redirect('/')
 
 
+# Editing selected user stories
 @app.route('/story/<int:story_id>', methods=['GET', 'POST'])
 def selecting_for_edit(story_id):
     if request.method == 'GET':
@@ -117,7 +113,7 @@ def selecting_for_edit(story_id):
                  "business_value=?, "
                  "estimation=?, "
                  "status=? WHERE id=?", (updated_user_story))
-        return redirect('/list')
+        return redirect('/')
 
 
 if __name__ == '__main__':

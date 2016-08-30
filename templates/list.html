@@ -42,15 +42,16 @@ Add an "Add a new User Story" button to the page. It should redirect to the /add
                 <td align="left" style="border:1px solid black;">{{row[4]}}</td>
                 <td align="left" style="border:1px solid black;">{{row[5]}}</td>
                 <td align="left" style="border:1px solid black;">{{row[6]}}</td>
-                <!--PUT-->
+                <!--PUT not working-->
                 <td width="10%" align="left" style="border:1px solid black;">
-                    <input type="image" id="edit" src="../static/pen.png" width="20" align="center" alt="Edit"></td>
-                <!--DELETE-->
+                    <form action='/story/{{row[0]}}' method="post"><input type="image" id="edit" src="../static/pen.png" width="20" align="center" alt="Edit"></form></td>
+                <!--DELETE not working-->
                 <td width="10%" align="left" style="border:1px solid black;" >
-                    <input type="image" id="delete" src="../static/bin.png" width="20" align="center" alt="Delete"></td>
+                    <form action="{{ url_for('deleting_user_story', id=row[0]) }}" method="post"><input type="image" id="delete" src="../static/bin.png" width="20" align="center" alt="Delete"></form></td>
             </tr>
             {% endfor %}
     </tr>
+                </form>
 
 </table>
 
