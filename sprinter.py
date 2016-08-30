@@ -49,25 +49,29 @@ def close_connection(exception):
     if db is not None:
         db.close()
 
-
-# List page
+# Basic page
 @app.route("/", methods=['GET'])
 def index():
-    testing_query = query_db("SELECT * FROM sprinter ORDER BY id ASC")
+    return redirect("/list")
+
+# List page
+@app.route("/list", methods=['GET'])
+def listing():
+    testing_query = query_db("""SELECT * FROM sprinter ORDER BY id ASC""")
     return render_template('list.html', query=testing_query)
 
 
 # Deleting selected user story - not working
 @app.route("/list", methods=['POST'])
 def deleting_user_story(story_id):
-    query_db("""DELETE FROM sprinter WHERE id=?""" + str(story_id))
-    return redirect('/')
+    query_db("""DELETE FROM sprinter WHERE id={0}""".format(str(story_id)))
+    return render_template('list.html', id=story_id)
 
 
 # Story page with blank input boxes
 @app.route('/story', methods=['GET'])
 def template_test():
-    return render_template('form.html')
+    return render_template('form.html', title='Add new Story')
 
 
 # Story page with adding new user stories
@@ -93,27 +97,29 @@ def adding_user_story():
     return redirect('/')
 
 
-# Editing selected user stories
-@app.route('/story/<int:story_id>', methods=['GET', 'POST'])
+# Selecting to edit
+@app.route('/story/<int:story_id>', methods=['GET'])
 def selecting_for_edit(story_id):
-    if request.method == 'GET':
-        query = query_db("SELECT * FROM sprinter WHERE id = " + str(story_id))
-        return render_template('form.html', query=query)
-    elif request.method == 'POST':
-        updated_user_story = {}
-        updated_user_story["story_title"] = request.form['story_title']
-        updated_user_story["story_content"] = request.form['story_content']
-        updated_user_story["acceptance_criteria"] = request.form['acceptance_criteria']
-        updated_user_story["business_value"] = request.form['business_value']
-        updated_user_story["estimation"] = request.form['estimation']
-        updated_user_story["status"] = request.form['status']
-        query_db("UPDATE sprinter SET title=?,"
-                 "content=?, "
-                 "acceptance_criteria=?, "
-                 "business_value=?, "
-                 "estimation=?, "
-                 "status=? WHERE id=?", (updated_user_story))
-        return redirect('/')
+    query = query_db("""SELECT * FROM sprinter WHERE id={0}""".format(str(story_id)))
+    return render_template('form.html', query=query, title='Edit Story', path='editing', method='post', id=story_id)
+
+# Editing
+@app.route('/story/<int:story_id>', methods=['POST'])
+def editing(story_id):
+    updated_user_story = {}
+    updated_user_story["story_title"] = request.form['story_title']
+    updated_user_story["story_content"] = request.form['story_content']
+    updated_user_story["acceptance_criteria"] = request.form['acceptance_criteria']
+    updated_user_story["business_value"] = request.form['business_value']
+    updated_user_story["estimation"] = request.form['estimation']
+    updated_user_story["status"] = request.form['status']
+    updated_user_story["id"] = story_id
+    query_db("""UPDATE sprinter SET title={0}, content={1},
+             acceptance_criteria={2},
+             business_value={3},
+             estimation={4},
+             status={5} WHERE id={6}""".format(**updated_user_story))
+    return redirect('/list')
 
 
 if __name__ == '__main__':
