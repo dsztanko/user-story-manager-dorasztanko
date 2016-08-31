@@ -69,7 +69,7 @@ def deleting_user_story(story_id):
 # Story page with blank input boxes
 @app.route('/story', methods=['GET'])
 def template_test():
-    return render_template('form.html', title='Add new Story', process='creating')
+    return render_template('form.html', title='Add new Story', process='creating', button='Create')
 
 
 # Story page with adding new user stories
@@ -99,24 +99,22 @@ def adding_user_story():
 @app.route('/story/<int:story_id>', methods=['GET'])
 def selecting_for_edit(story_id):
     query = query_db("""SELECT * FROM sprinter WHERE id={0}""".format(str(story_id)))
-    return render_template('form.html', query=query, title='Edit Story', method='post', id=story_id)
+    return render_template('form_edit.html', query=query, title='Edit Story', button='Update', story_id=story_id)
 
 # Editing -- not finished
 @app.route('/story/<int:story_id>', methods=['POST'])
 def editing(story_id):
-    updated_user_story = {}
-    updated_user_story["story_title"] = request.form['story_title']
-    updated_user_story["story_content"] = request.form['story_content']
-    updated_user_story["acceptance_criteria"] = request.form['acceptance_criteria']
-    updated_user_story["business_value"] = request.form['business_value']
-    updated_user_story["estimation"] = request.form['estimation']
-    updated_user_story["status"] = request.form['status']
-    updated_user_story["id"] = story_id
     query_db("""UPDATE sprinter SET title={0}, content={1},
              acceptance_criteria={2},
              business_value={3},
              estimation={4},
-             status={5} WHERE id={6}""".format(**updated_user_story))
+             status={5} WHERE id={6}""".format(request.form["story_title"],
+                                               request.form["story_content"],
+                                               request.form["acceptance_criteria"],
+                                               request.form["business_value"],
+                                               request.form["estimation"],
+                                               request.form["status"],
+                                               str(story_id)))
     return redirect('/list')
 
 
