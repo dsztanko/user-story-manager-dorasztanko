@@ -18,26 +18,29 @@
         <title>Sprint reporter</title></head>
 
     <body>
-    <form action="/story" method="post">
+    <form action="/story/{{ story_id }}" method="post">
         <h2>User Story Manager - {{ title }}</h2>
+
+        {% for row in query %}
 
 
             <label for="story_title">Story Title</label>
             <p><input name="story_title"
                       id="story_title"
-                      size="78"></p>
+                      size="78"
+                      value="{{ row[1]}}"></p>
 
             <label for="story_content">User Story</label>
             <p><textarea name="story_content"
                          id="story_content"
                          rows="5"
-                         cols="60"></textarea></p>
+                         cols="60">{{ row[2]}}</textarea></p>
 
             <label for="acceptance_criteria">Acceptance Criteria</label>
             <p><textarea name="acceptance_criteria"
                          id="acceptance_criteria"
                          rows="7"
-                         cols="60"></textarea></p>
+                         cols="60">{{ row[3]}}</textarea></p>
 
             <label for="business_value">Business Value</label>
             <p><input type="number"
@@ -45,7 +48,8 @@
                       id="business_value"
                       step="100"
                       min="100"
-                      max="1500"></p>
+                      max="1500"
+                      value="{{ row[4]}}"></p>
 
             <label for="estimation">Estimation (h)</label>
             <p><input type="number"
@@ -53,7 +57,8 @@
                       id="estimation"
                       step="0.5"
                       min="0.5"
-                      max="40"></p>
+                      max="40"
+                      value="{{ row[5]}}"></p>
 
 
             <label for="status">Status</label>
@@ -65,8 +70,10 @@
                 <option>Review</option>
                 <option>Done</option></select></p>
 
-            <label for="create"><button id="create"
-                                        type="submit"> {{ button }}</button></label>
+        {% endfor %}
+
+            <label for="update"><button id="update"
+                                        type="submit">{{ button }}</button></label>
         </form>
 
     </body>
