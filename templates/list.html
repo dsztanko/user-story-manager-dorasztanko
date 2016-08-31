@@ -35,20 +35,20 @@ Add an "Add a new User Story" button to the page. It should redirect to the /add
         <th width="10%" align="left" style="border:1px solid black;">Status</th>
             {% for row in query %}
             <tr>
-                <td align="left" style="border:1px solid black;">{{row[0]}}</td>
-                <td align="left" style="border:1px solid black;">{{row[1]}}</td>
-                <td align="left" style="border:1px solid black;">{{row[2]}}</td>
-                <td align="left" style="border:1px solid black;">{{row[3]}}</td>
-                <td align="left" style="border:1px solid black;">{{row[4]}}</td>
-                <td align="left" style="border:1px solid black;">{{row[5]}}</td>
-                <td align="left" style="border:1px solid black;">{{row[6]}}</td>
+                <td align="left" style="border:1px solid black;">{{ row[0] }}</td>
+                <td align="left" style="border:1px solid black;">{{ row[1] }}</td>
+                <td align="left" style="border:1px solid black;">{{ row[2] }}</td>
+                <td align="left" style="border:1px solid black;">{{ row[3] }}</td>
+                <td align="left" style="border:1px solid black;">{{ row[4] }}</td>
+                <td align="left" style="border:1px solid black;">{{ row[5] }}</td>
+                <td align="left" style="border:1px solid black;">{{ row[6] }}</td>
                 <!--PUT not working-->
-                <td width="10%" align="left" style="border:1px solid black;">
-                    <form action='{{ url_for('selecting_for_edit', story_id=row[0]) }}' method="get">
-                      <input type="image" id="edit" src="../static/pen.png" width="20" align="center" alt="Edit"></form></td>
+                <!--<td width="10%" align="left" style="border:1px solid black;">-->
+                    <!--<form action='{{ url_for('selecting_for_edit', story_id=row[0]) }}' method="get">-->
+                      <!--<input type="image" id="edit" src="../static/pen.png" width="20" align="center" alt="Edit"></form></td>-->
                 <!--DELETE not working-->
                 <td width="10%" align="left" style="border:1px solid black;" >
-                    <form action="{{ url_for('deleting_user_story', story_id=row[0]) }}" method="post">
+                    <form action="/list/{{ row[0] }}" method="get">
                       <input type="image" id="delete" src="../static/bin.png" width="20" align="center" alt="Delete"></form></td>
             </tr>
             {% endfor %}
